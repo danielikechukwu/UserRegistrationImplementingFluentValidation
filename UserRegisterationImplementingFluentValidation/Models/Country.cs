@@ -2,8 +2,8 @@
 {
     public class Country
     {
-        public int CountryId { get; set; }
-        public string Name { get; set; }
-        public ICollection<City> Cities { get; set; }
+        public int CountryId { get; set; } // Primary Key
+        public string Name { get; set; }   // Country name
+        public ICollection<City> Cities { get; set; } // List of cities in this country
     }
 }

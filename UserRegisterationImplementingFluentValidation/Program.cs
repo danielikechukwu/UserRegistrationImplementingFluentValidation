@@ -2,6 +2,8 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using UserRegisterationImplementingFluentValidation.Data;
+using UserRegisterationImplementingFluentValidation.DTOs;
+using UserRegisterationImplementingFluentValidation.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +15,7 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.PropertyNamingPolicy = null;
     });
 
-// Register the ECommerceDbContext with dependency injection
+// Register the UserDbContext with dependency injection
 builder.Services.AddDbContext<UserDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("UserRegistrationDBConnection")));
 
@@ -22,8 +24,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // To enable Automatic Fluent API Validation, Please uncomment the following two lines of Code
-builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+// builder.Services.AddFluentValidationAutoValidation();
+// builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+
+// Register Each Validator Manually
+builder.Services.AddScoped<IValidator<UserDTO>, UserDTOValidator>();
 
 var app = builder.Build();
 
